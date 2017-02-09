@@ -1,17 +1,9 @@
     #! /usr/bin/python
+# coding=utf-8
 
 # pacman.pyw
-# By David Reilly
-
-# Modified by Andy Sommerville, 8 October 2007:
-# - Changed hard-coded DOS paths to os.path calls
-# - Added constant SCRIPT_PATH (so you don't need to have pacman.pyw and res in your cwd, as long
-# -   as those two are in the same directory)
-# - Changed text-file reading to accomodate any known EOLn method (\n, \r, or \r\n)
-# - I (happily) don't have a Windows box to test this. Blocks marked "WIN???"
-# -   should be examined if this doesn't run in Windows
-# - Added joystick support (configure by changing JS_* constants)
-# - Added a high-score list. Depends on wx for querying the user's name
+# Create by Arthur and João Pedro
+# Based on David Reilly code http://pinproject.com/pacman/pacman.htm
 
 import pygame, sys, os, random
 from pygame.locals import *
@@ -214,7 +206,7 @@ class game ():
         #         thisGame.lives += 1
         if flag == 1:
             self.score += amount
-            print self.score
+
         if flag == 0:
             print "o score final e ",self.score
 
@@ -224,8 +216,6 @@ class game ():
 
         for i in range(0, self.lives, 1):
             screen.blit (self.imLife, (24 + i * 10 + 16, self.screenSize[1] - 12) )
-
-        #screen.blit (thisFruit.imFruit[ thisFruit.fruitType ], (4 + 16, self.screenSize[1] - 20) )
 
         if self.mode == 3:
             screen.blit (self.imGameOver, (self.screenSize[0] / 2 - 32, self.screenSize[1] / 2 - 10) )
@@ -1925,7 +1915,7 @@ while True:
 
 
 
-    #thisGame.DrawScore()
+    thisGame.DrawScore()
 
     pygame.display.flip()
 
