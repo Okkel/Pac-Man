@@ -1736,7 +1736,7 @@ class Mensagem():
 
 
 #
-from view import InterfaceRedes,InterfaceCont
+from view import InterfaceRedes
 
 gui = InterfaceRedes()
 print 'ip = ',gui.ip,' / porta = ',gui.porta , 'nome = ',gui.nome_player
