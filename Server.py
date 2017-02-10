@@ -20,16 +20,20 @@ class Conexao():
         print 'Conectado por', cliente
 
         i = 0
+
+
         while True:
             if len(CONNECTION_LIST) == 1 and i == 0:
                 print 'Aguardando conexao adversario'
+                # if user == 1:
                 i = 1
             if len(CONNECTION_LIST) > 1 :
-                #k = CONNECTION_LIST.keys()
-                #for key in k:
-                #    CONNECTION_LIST[key].sendall()
-                break
 
+                k = CONNECTION_LIST.keys()
+                for key in k:
+                    if(key != user):
+                        CONNECTION_LIST[key].sendall("-1")
+                break
         while True:
             msg = CONNECTION_LIST[user].recv(64)
             if int(msg)  < 5 :

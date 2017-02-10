@@ -1687,9 +1687,9 @@ def GetCrossRef ():
 #
 
 class Mensagem():
-    def __init__(self,i):
+    def __init__(self):
         self.msg = 0
-        thread.start_new_thread(self.recebe, tuple([1,2]))
+        # thread.start_new_thread(self.recebe, tuple([1,2]))
 
     def envia(self,msg):
         #thread.start_new_thread(m.recebe, tuple([1,2]))
@@ -1736,10 +1736,10 @@ class Mensagem():
 
 
 #
-from view import InterfaceRedes
+from view import InterfaceRedes,InterfaceCont
 
 gui = InterfaceRedes()
-print 'ip = ',gui.ip,' / porta = ',gui.porta
+print 'ip = ',gui.ip,' / porta = ',gui.porta , 'nome = ',gui.nome_player
 
 
 #HOST = sys.argv[1]  # HOST = '172.16.254.209'# Endereco IP do Servidor
@@ -1752,9 +1752,15 @@ tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 tcp.connect(dest)
 
 
-m = Mensagem(0)
+m = Mensagem()
+while True:
+    m.msg = tcp.recv(64)
+    if m.msg == "-1":
 
+        break
 
+gui_comeco = InterfaceCont()
+thread.start_new_thread(m.recebe, tuple([1,2]))
 player = pacman()
 playerServer = pacmanServer()
 

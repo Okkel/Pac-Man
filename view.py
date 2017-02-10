@@ -2,6 +2,7 @@
 #
 import sys
 import gi
+import time
 gi.require_version('Gtk','3.0')
 from gi.repository import Gtk
 
@@ -10,6 +11,9 @@ from gi.repository import Gtk
 class InterfaceRedes():
     def __init__(self):
 
+
+        self.boxMain = Gtk.VBox(False, 0)
+        self.boxMain.set_border_width(2)
 
         self.box = Gtk.HBox(False, 0)
         self.box.set_border_width(2)
@@ -39,9 +43,21 @@ class InterfaceRedes():
 
         self.box.add(self.button_conectar)
 
-        self.window.add(self.box)
+
+
+        self.box1 = Gtk.HBox(False, 0)
+        self.box1.set_border_width(2)
+        self.label_nome = Gtk.Label("Nome")
+        self.nome_entry = Gtk.Entry()
+
+        self.box1.add(self.label_nome)
+        self.box1.add(self.nome_entry)
+        self.boxMain.add(self.box1)
+        self.boxMain.add(self.box)
+        self.window.add(self.boxMain)
 
         self.window.show_all()
+
         #self.builder = Gtk.Builder()
         #self.builder.add_from_file("InterfaceRedes.glade")
 
@@ -66,6 +82,7 @@ class InterfaceRedes():
     def conectar(self, widget):
         self.ip = self.ip_entry.get_text()
         self.porta  = self.porta_entry.get_text()
+        self.nome_player = self.nome_entry.get_text()
 
         self.window.hide()
         Gtk.main_quit()
@@ -89,3 +106,36 @@ class InterfaceRedes():
         # print(texto)
         # arq.close()
         return
+
+# class InterfaceCont():
+#
+#     def __intit__(self):
+#
+#
+#         self.boxMain = Gtk.VBox(False, 0)
+#         self.boxMain.set_border_width(2)
+#
+#         self.window = Gtk.Window()
+#         self.window.connect("destroy", lambda wid: gtk.main_quit())
+#         self.window.connect("delete_event", lambda a1,a2:gtk.main_quit())
+#         self.window.set_title("O jogo vai começar")
+#         self.window.set_border_width(10)
+#
+#         self.label_estatico = Gtk.Label("O jogo vai começar em:")
+#
+#         self.label = Gtk.Label()
+#
+#
+#
+#         self.boxMain.add(self.label_estatico)
+#
+#         self.window.add(self.boxMain)
+#
+#         self.window.show_all()
+#
+#
+#         Gtk.main()
+#         for i in range(5,0,-1):
+#             self.label(i)
+#             time.sleep(1)
+#             self.window.show_all()
