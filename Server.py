@@ -19,14 +19,9 @@ class Conexao():
     def conectado(self, con, cliente ,user):
         print 'Conectado por', cliente
 
-        i = 0
 
-
+        print 'Aguardando conexao adversario'
         while True:
-            if len(CONNECTION_LIST) == 1 and i == 0:
-                print 'Aguardando conexao adversario'
-                # if user == 1:
-                i = 1
             if len(CONNECTION_LIST) > 1 :
 
                 k = CONNECTION_LIST.keys()
@@ -36,30 +31,40 @@ class Conexao():
                 break
         while True:
             msg = CONNECTION_LIST[user].recv(64)
-            if int(msg)  < 5 :
-                # con.send('recebida')
-                print cliente,'diz \n',msg
+            try:
+                if msg <>'-1' and int(msg)  < 5 :
+                    # con.send('recebida')
+                    print cliente,'diz \n',msg
 
-                k = CONNECTION_LIST.keys()
+                    k = CONNECTION_LIST.keys()
 
-                for key in k:
-                    if(key != user):
-                        CONNECTION_LIST[key].sendall(msg)
+                    for key in k:
+                        if(key != user):
+                            CONNECTION_LIST[key].sendall(msg)
 
-            else:
-                #fazer algo pra receber os 2 placares
-                print 'Placar: ',msg
-                print cliente,'Saiu'
-                k = CONNECTION_LIST.keys()
-                for key in k:
-                    if(key != user):
-                        # CONNECTION_LIST[key].sendall(str(cliente)+msg)
-                        CONNECTION_LIST[key].sendall(msg)
-                        CONNECTION_LIST.pop(user)
-                        CONNECTION_LIST[user].close()
-                        con.close()
-                        thread.exit()
-                        print 'finalizada'
+                else:
+                    #fazer algo pra receber os 2 placares
+                    msg = CONNECTION_LIST[user].recv(64)
+                    print 'Placar: ',msg
+                    print cliente,'Saiu'
+                    k = CONNECTION_LIST.keys()
+                    for key in k:
+                        if(key != user):
+                            # CONNECTION_LIST[key].sendall(str(cliente)+msg)
+                            CONNECTION_LIST[key].sendall(msg)
+                            # CONNECTION_LIST.pop(user)
+                            # CONNECTION_LIST[user].close()
+                            # con.close()
+                            # thread.exit()
+                            # print 'finalizada'
+            except:
+                    if msg == '-1':
+                        print "fail"
+                        break
+                    else:
+                        print '.....'
+                    break
+                # print 'Placar: ',msg
 
 c = Conexao()
 user = 0

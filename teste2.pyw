@@ -1523,28 +1523,28 @@ def CheckInputs():
         if pygame.key.get_pressed()[ pygame.K_RIGHT ] or (js!=None and js.get_axis(JS_XAXIS)>0): #or recebeu comando do server
             #player rede
             if not thisLevel.CheckIfHitWall((player.x + player.speed, player.y), (player.nearestRow, player.nearestCol)):
+                m.envia('1')
                 player.velX = player.speed
                 player.velY = 0
-                m.envia('1')
 
 
         elif pygame.key.get_pressed()[ pygame.K_LEFT ] or (js!=None and js.get_axis(JS_XAXIS)<0):
             if not thisLevel.CheckIfHitWall((player.x - player.speed, player.y), (player.nearestRow, player.nearestCol)):
+                m.envia('2')
                 player.velX = -player.speed
                 player.velY = 0
-                m.envia('2')
 
         elif pygame.key.get_pressed()[ pygame.K_DOWN ] or (js!=None and js.get_axis(JS_YAXIS)>0):
             if not thisLevel.CheckIfHitWall((player.x, player.y + player.speed), (player.nearestRow, player.nearestCol)):
+                m.envia('3')
                 player.velX = 0
                 player.velY = player.speed
-                m.envia('3')
 
         elif pygame.key.get_pressed()[ pygame.K_UP ] or (js!=None and js.get_axis(JS_YAXIS)<0):
             if not thisLevel.CheckIfHitWall((player.x, player.y - player.speed), (player.nearestRow, player.nearestCol)):
+                m.envia('4')
                 player.velX = 0
                 player.velY = -player.speed
-                m.envia('4')
 
         #####################INPUTS DO SERVER##############################
         # elif (int(m.msg) == 1):# or pygame.key.get_pressed()[ pygame.K_d ]  :
@@ -1579,6 +1579,7 @@ def CheckInputs():
         print 'o jogo acabou'
         # tela de final acrescentada aqui
         thisGame.AddToScore(0,0)
+        sys.exit(0)
 
 
 def CheckInputsServer():
@@ -1698,10 +1699,11 @@ class Mensagem():
         if int(msg) < 5:
             tcp.send (str(self.msg))
         else:
-            tcp.send (str(self.msg))
-            # tcp.send (self.msg)
-            tcp.close()
-            thread.exit()
+            print 'envie algo >=  5'
+            # tcp.send (str(self.msg))
+            # # tcp.send (self.msg)
+            # tcp.close()
+            # thread.exit()
 
     def recebe(self,a,b):
         while True:
@@ -1759,7 +1761,6 @@ while True:
 
         break
 
-gui_comeco = InterfaceCont()
 thread.start_new_thread(m.recebe, tuple([1,2]))
 player = pacman()
 playerServer = pacmanServer()
