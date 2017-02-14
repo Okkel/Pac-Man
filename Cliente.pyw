@@ -11,6 +11,9 @@ from pygame.locals import *
 import socket, select, string, sys
 import thread
 import time
+from pygame.mixer import Sound
+pygame.init()
+audio = pygame.mixer.Sound("res/sounds/Classical_Loop.wav")
 
 
 # WIN???
@@ -1774,6 +1777,7 @@ while True:
 
         break
 
+
 thread.start_new_thread(m.recebe, tuple([1,2]))
 player = pacman()
 playerServer = pacmanServer()
@@ -1816,6 +1820,7 @@ else: js=None
 
 thisGame.StartNewGame()
 time.sleep(2)
+audio.play(-1)
 
 while True:
 
@@ -1861,7 +1866,7 @@ while True:
             time.sleep(1)
             m.envia(s)
             # print "venci"
-        print "o meu score final e ",s
+        print gui.nome_player,":score final :\n",s
         time.sleep(3)
         print "adversario" ,m.adScore
         break
