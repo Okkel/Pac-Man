@@ -11,20 +11,17 @@ tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 orig = (HOST, PORT)
 tcp.bind(orig)
 tcp.listen(2)
-p1 = {}
 
 class Conexao():
     # def __init__(self,ip,cliente):
         # self.ip = ip
         # self.cliente = cliente
-    def placar(self ,user,placar):
-        p1[user]=placar
 
     def conectado(self, con, cliente ,user):
         print 'Conectado por', cliente
 
 
-        print 'Aguardando conexao adversario'
+        print 'Aguardando conexao com o adversario'
         while True:
             if len(CONNECTION_LIST) > 1 :
 
@@ -48,21 +45,25 @@ class Conexao():
                             CONNECTION_LIST[key].sendall(msg)
 
                 elif msg == "-1":
-
+                    for key in k:
+                        # print 'chegou akiiiiii'
+                        if(key != user):
+                            #print 'Player ',user,' Placar: ',msg
+                            CONNECTION_LIST[key].sendall("-1")
                     msg = CONNECTION_LIST[user].recv(64)
                     if msg:
-                        print 'Placar: ',msg
-                        self.placar(user,int(msg))
-                        print p1,'---*******-----'
-                        time.sleep(1)
+                        #self.placar(user,int(msg))
+                        #print p1,'---*******-----'
+                        #time.sleep(1)
                         # print 'chegou aki'
                         k = CONNECTION_LIST.keys()
                         for key in k:
                             # print 'chegou akiiiiii'
                             if(key != user):
-                                CONNECTION_LIST[key].sendall(p1[user])
+                                print 'Player ',user,' Placar: ',msg
+                                CONNECTION_LIST[key].sendall(msg)
                         # sys.exit()
-
+                        break
             except:
                     if msg == '-1':
                         print "fail"

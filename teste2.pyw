@@ -208,8 +208,7 @@ class game ():
             self.score += amount
 
         if flag == 0:
-            print "o score final e ",self.score
-
+            return self.score
 
     def DrawScore (self):
         self.DrawNumber (self.score, (24 + 16, self.screenSize[1] - 24) )
@@ -1575,11 +1574,12 @@ def CheckInputs():
 
     elif thisGame.mode == 3:
         # if pygame.key.get_pressed()[ pygame.K_RETURN ] or (js!=None and js.get_button(JS_STARTBUTTON)):
-        time.sleep(2)
-        print 'o jogo acabou'
-        # tela de final acrescentada aqui
-        thisGame.AddToScore(0,0)
-        sys.exit(0)
+        # time.sleep(2)
+        # print 'o jogo acabou'
+        # # tela de final acrescentada aqui
+        # thisGame.AddToScore(0,0)
+        # sys.exit(0)
+        pass
 
 
 def CheckInputsServer():
@@ -1699,11 +1699,8 @@ class Mensagem():
         if int(msg) < 5:
             tcp.send (str(self.msg))
         else:
-            print 'envie algo >=  5'
-            # tcp.send (str(self.msg))
-            # # tcp.send (self.msg)
-            # tcp.close()
-            # thread.exit()
+            tcp.send (str(self.msg))
+            print "enviei"
 
     def recebe(self,a,b):
         while True:
@@ -1712,6 +1709,7 @@ class Mensagem():
             if self.msg:
                 #print self.msg
                 CheckInputsServer()
+        break
                 # print self.msg,'-----'
             #print self.msg
             #if str(msg) <> 'out':
@@ -1756,7 +1754,7 @@ tcp.connect(dest)
 
 m = Mensagem()
 while True:
-    m.msg = tcp.recv(64)
+    m.msg = tcp.recv(2)
     if m.msg == "-1":
 
         break
@@ -1837,7 +1835,13 @@ while True:
 
     elif thisGame.mode == 3:
         # game over
-        CheckInputs()
+        # enviar escore daqui
+        s = thisGame.AddToScore(0,0)
+        print "o score final e ",s
+        m.envia("-1")
+        m.envia(s)
+        sys.exit()
+        # CheckInputs()
 
     elif thisGame.mode == 4:
         # waiting to start
